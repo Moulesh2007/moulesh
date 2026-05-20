@@ -11,7 +11,8 @@ class RealtimeTrackingService {
   initialize(useWebSocket = false) {
     if (useWebSocket) {
       try {
-        this.socket = io('http://localhost:3000', {
+        const socketUrl = import.meta.env.VITE_SOCKET_URL || window.location.origin;
+        this.socket = io(socketUrl, {
           transports: ['websocket', 'polling'],
         });
 
