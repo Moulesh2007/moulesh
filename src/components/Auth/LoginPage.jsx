@@ -10,6 +10,10 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
+import { API_URL } from '../../services/api.js';
+
+/** Looser than browser type=email; avoids Firefox "string did not match the expected pattern". */
+const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 
 /* ── Password strength helpers ───────────────────────────────────────────── */
 const RULES = [
@@ -61,13 +65,18 @@ function RegisterForm({ onSuccess }) {
     e.preventDefault();
     setError(''); setSuccess('');
 
-    if (!form.email.endsWith('@gmail.com')) {
+    const email = form.email.trim();
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (!email.toLowerCase().endsWith('@gmail.com')) {
       setError('Only Gmail addresses (@gmail.com) are accepted.');
       return;
     }
 
     try {
-      const data = await register(form.name, form.email, form.password, form.confirm);
+      const data = await register(form.name, email, form.password, form.confirm);
       setSuccess(`Welcome, ${data.name}! Account created successfully.`);
       setTimeout(() => onSuccess(data), 1200);
     } catch (err) {
@@ -76,7 +85,7 @@ function RegisterForm({ onSuccess }) {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {error   && <Alert severity="error"   onClose={() => setError('')}   sx={{ borderRadius: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ borderRadius: 2 }}>{success}</Alert>}
 
@@ -89,7 +98,8 @@ function RegisterForm({ onSuccess }) {
 
       {/* Gmail */}
       <TextField
-        label="Gmail Address" name="email" type="email" value={form.email}
+        label="Gmail Address" name="email" type="text" inputMode="email" autoComplete="email"
+        value={form.email}
         onChange={handleChange} required fullWidth sx={inputSx}
         helperText="Must be a @gmail.com address"
         FormHelperTextProps={{ sx: { color: '#8B949E' } }}
@@ -194,8 +204,13 @@ function LoginForm({ onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    const email = form.email.trim();
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
     try {
-      const data = await login(form.email, form.password);
+      const data = await login(email, form.password);
       onSuccess(data);
     } catch (err) {
       setError(err.message);
@@ -212,11 +227,12 @@ function LoginForm({ onSuccess }) {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {error && <Alert severity="error" onClose={() => setError('')} sx={{ borderRadius: 2 }}>{error}</Alert>}
 
       <TextField
-        label="Gmail Address" name="email" type="email" value={form.email}
+        label="Gmail Address" name="email" type="text" inputMode="email" autoComplete="email"
+        value={form.email}
         onChange={handleChange} required fullWidth sx={inputSx}
         InputProps={{ startAdornment: <InputAdornment position="start"><Email sx={{ color: '#8B949E' }} /></InputAdornment> }}
       />
@@ -239,6 +255,7 @@ function LoginForm({ onSuccess }) {
       {/* Quick fill for admin */}
       <Box sx={{ display: 'flex', gap: 1 }}>
         <Button
+          type="button"
           size="small" variant="outlined"
           onClick={() => setForm({ email: 'mouleshmr11@gmail.com', password: 'Admin@1234' })}
           sx={{ flex: 1, fontSize: '0.7rem', color: '#FF9800', borderColor: 'rgba(255,152,0,0.4)',
@@ -288,9 +305,18 @@ export default function LoginPage() {
       navigate('/role-selection');
     } else {
       const token = localStorage.getItem('token');
-      const res = await fetch('/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
-      const { route } = await res.json();
-      navigate(route || '/dashboard');
+      let route = '/dashboard';
+      try {
+        const res = await fetch(`${API_URL}/user/dashboard`, { headers: { Authorization: `Bearer ${token}` } });
+        const text = await res.text();
+        if (text) {
+          const json = JSON.parse(text);
+          if (json.route) route = json.route;
+        }
+      } catch {
+        /* ignore parse / network; use default route */
+      }
+      navigate(route);
     }
   };
 

@@ -1,6 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_URL } from '../services/api.js';
 
 const AuthContext = createContext();
+
+async function parseJsonResponse(res) {
+  const text = await res.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(
+      res.ok
+        ? 'Unexpected response from server. If you are on the hosted site, set VITE_API_URL to your API base (e.g. https://your-api.onrender.com/api).'
+        : 'Could not reach the login server. Check your connection or API URL.'
+    );
+  }
+}
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -14,11 +29,11 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (!token) { setLoading(false); return; }
       try {
-        const res = await fetch('/api/user/me', {
+        const res = await fetch(`${API_URL}/user/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
-          const data = await res.json();
+          const data = await parseJsonResponse(res);
           setUser(data);
           setUserRole(data.role);
           setIsAuthenticated(true);
@@ -44,12 +59,12 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password, confirmPassword) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, confirmPassword }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) throw new Error(data.message || 'Registration failed.');
       return _applyAuth(data);
     } finally {
@@ -60,12 +75,12 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) throw new Error(data.message || 'Login failed.');
       return _applyAuth(data);
     } finally {
@@ -76,12 +91,12 @@ export const AuthProvider = ({ children }) => {
   const googleLogin = async (credential) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/google', {
+      const res = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) throw new Error(data.message || 'Google Login failed.');
       return _applyAuth(data);
     } finally {
@@ -91,12 +106,12 @@ export const AuthProvider = ({ children }) => {
 
   const setRole = async (role) => {
     const token = localStorage.getItem('token');
-    const res = await fetch('/api/user/select-role', {
+    const res = await fetch(`${API_URL}/user/select-role`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ role }),
     });
-    const data = await res.json();
+    const data = await parseJsonResponse(res);
     if (!res.ok) throw new Error(data.message || 'Failed to set role.');
     localStorage.setItem('token', data.token);
     setUserRole(data.role);
@@ -105,7 +120,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     const token = localStorage.getItem('token');
     try {
-      await fetch('/api/auth/logout', {
+      await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });
