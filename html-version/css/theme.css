@@ -1,0 +1,56 @@
+:root{
+  --brand-start: #FF6F00;
+  --brand-end: #7B61FF;
+  --brand-accent: #00D2FF;
+  --bg-900: #071428;
+  --bg-800: #0b1f33;
+  --surface: rgba(11,18,32,0.85);
+  --muted: #8B949E;
+  --text-primary: #E6EDF3;
+  --card-border: rgba(255,255,255,0.06);
+}
+
+/* Page background */
+body{
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(123,97,255,0.05), transparent 10%), radial-gradient(1000px 500px at 90% 90%, rgba(255,111,0,0.04), transparent 10%), linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 100%);
+  color: var(--text-primary);
+  font-family: Inter, Roboto, sans-serif;
+}
+
+/* Glass card */
+.glass-card{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(10px);border:1px solid var(--card-border);border-radius:12px}
+
+/* Brand utilities */
+.brand-gradient{background: linear-gradient(135deg,var(--brand-start),var(--brand-end));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-badge{background:linear-gradient(135deg,var(--brand-start),var(--brand-end));color:#fff;padding:6px 10px;border-radius:10px;display:inline-block;font-weight:700}
+
+/* Buttons */
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.btn-primary{background:linear-gradient(135deg,var(--brand-start),var(--brand-end));color:#fff;box-shadow:0 10px 30px rgba(123,97,255,0.12)}
+.btn-ghost{background:transparent;border:1px solid var(--card-border);color:var(--text-primary)}
+
+/* Small helpers */
+.muted{color:var(--muted)}
+.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700}
+
+/* Layout helpers for html-version pages */
+.page-container{max-width:1100px;margin:28px auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+
+/* Responsive tweaks */
+@media (max-width:640px){.page-container{padding:12px}}
+
+/* Page-specific utilities */
+.stat-count{font-size:2rem;font-weight:800;margin-top:8px}
+.muted-note{color:var(--muted)}
+.muted-note.mt12{margin-top:12px}
+.map-placeholder{margin-top:22px;background:#f8fafc;border-radius:18px;height:220px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+.section-title{margin-bottom:18px}
+.progress{background:rgba(255,255,255,0.04);height:10px;border-radius:8px;overflow:hidden}
+.progress-inner{height:100%;background:linear-gradient(90deg,var(--brand-start),var(--brand-end));width:0}
+.w-85{width:85%}
+.w-72{width:72%}
+.w-65{width:65%}
+.w-42{width:42%}
+.w-78{width:78%}
+

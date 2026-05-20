@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager Dashboard - RS&CO Tracking</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="manager">
+  <div class="container page-container">
+    <div class="content-section">
+      <div class="card glass-card" style="padding:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 class="brand-gradient">Manager Hub</h1>
+          <p class="muted-note">Manage orders, fleet and team operations.</p>
+          <div style="margin-top:12px">
+            <a class="btn btn-primary" href="orders.html">Manage Orders</a>
+            <a class="btn btn-ghost" href="fleet.html" style="margin-left:8px">Open Fleet</a>
+          </div>
+        </div>
+        <div style="min-width:260px;">
+          <h4 style="margin:0 0 8px 0">Fleet Snapshot</h4>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <div class="pill">In Transit: 3</div>
+            <div class="pill">Available: 5</div>
+            <div class="pill">Maintenance: 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" style="margin-top:18px">
+      <div class="grid">
+        <div class="card glass-card" style="padding:18px">
+          <h3>Active Orders</h3>
+          <table style="width:100%;margin-top:12px;color:var(--muted)">
+            <thead><tr><th>Order</th><th>Client</th><th>Status</th><th>ETA</th></tr></thead>
+            <tbody>
+              <tr><td>#1001</td><td>ACME Ltd</td><td>Loading</td><td>13:20</td></tr>
+              <tr><td>#1002</td><td>BuildCo</td><td>In Transit</td><td>14:05</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Quick Actions</h3>
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <a class="btn btn-primary" href="orders.html">New Dispatch</a>
+            <a class="btn btn-ghost" href="inventory.html">Reserve Materials</a>
+          </div>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Map</h3>
+          <div class="map-placeholder">Open Fleet → live map</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

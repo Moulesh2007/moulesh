@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Driver Simulator</title>
+  </head>
+  <body>
+    <h3>Driver Simulator</h3>
+    <p>Pick a vehicle id and start sending simulated GPS updates to the socket server.</p>
+    <label>Vehicle ID: <input id="vid" value="VH-001" /></label>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <pre id="log" style="height:200px;overflow:auto;border:1px solid #ccc;padding:8px"></pre>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+      const logEl = document.getElementById('log');
+      const startBtn = document.getElementById('start');
+      const stopBtn = document.getElementById('stop');
+      const vidInput = document.getElementById('vid');
+      const socket = io('http://localhost:4000');
+      let timer = null;
+
+      socket.on('connect', () => log('connected to socket server'));
+      socket.on('disconnect', () => log('disconnected'));
+
+      function log(msg) { logEl.textContent += msg + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+
+      function randBetween(a,b){ return a + Math.random()*(b-a); }
+
+      startBtn.onclick = () => {
+        if (timer) return;
+        const id = vidInput.value || 'VH-001';
+        let lat = 12.97 + Math.random()*0.02;
+        let lng = 77.59 + Math.random()*0.02;
+        timer = setInterval(() => {
+          lat += (Math.random()-0.5)*0.0015;
+          lng += (Math.random()-0.5)*0.0015;
+          const payload = { id, lat:+lat.toFixed(6), lng:+lng.toFixed(6), speed: Math.floor(randBetween(20,60)), fuelLevel: Math.max(5, Math.floor(randBetween(30,95))), location: `${lat.toFixed(4)}, ${lng.toFixed(4)}`, timestamp: Date.now() };
+          socket.emit('driver-update', payload);
+          log('sent: ' + JSON.stringify(payload));
+        }, 2000);
+      };
+
+      stopBtn.onclick = () => { if (timer) { clearInterval(timer); timer = null; log('stopped'); } };
+    </script>
+  </body>
+</html>

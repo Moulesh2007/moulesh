@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal - RS&CO Tracking</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="client">
+  <div class="container page-container">
+    <div class="content-section">
+      <div class="card glass-card" style="padding:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 class="brand-gradient">Client Portal</h1>
+          <p class="muted-note">Place orders, track deliveries and view billing.</p>
+          <div style="margin-top:12px">
+            <a class="btn btn-primary" href="orders.html">Create Order</a>
+            <a class="btn btn-ghost" href="reports.html" style="margin-left:8px">Invoices</a>
+          </div>
+        </div>
+        <div style="min-width:260px;">
+          <h4 style="margin:0 0 8px 0">Account</h4>
+          <div class="pill">Balance Due: $0</div>
+          <div style="margin-top:8px" class="pill">Last Order: #1000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" style="margin-top:18px">
+      <div class="grid">
+        <div class="card glass-card" style="padding:18px">
+          <h3>My Orders</h3>
+          <table style="width:100%;margin-top:12px;color:var(--muted)">
+            <thead><tr><th>Order</th><th>Date</th><th>Status</th><th>ETA</th></tr></thead>
+            <tbody>
+              <tr><td>#1000</td><td>2026-05-10</td><td>Delivered</td><td>—</td></tr>
+              <tr><td>#1001</td><td>2026-05-12</td><td>In Progress</td><td>14:00</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Track Delivery</h3>
+          <div class="map-placeholder">Enter order to track on live map</div>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Billing & Documents</h3>
+          <p class="muted-note" style="margin-top:8px">Download invoices and payment history</p>
+          <div style="margin-top:12px"><a class="btn btn-ghost" href="reports.html">Open Billing</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

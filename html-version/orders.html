@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - RS&CO Tracking</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="orders">
+    <div class="container">
+        <div class="header-row content-section">
+            <div class="page-top">
+                <div>
+                    <h1 class="page-title">Order Management</h1>
+                    <p class="subtitle">Create orders, track status, and monitor deliveries.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-row content-section">
+            <div class="card">
+                <h3>New Order Form</h3>
+                <form id="orderForm" class="login-form">
+                    <div class="form-group">
+                        <label for="mixType">Mix Type</label>
+                        <select id="mixType" required>
+                            <option value="">Select mix type</option>
+                            <option value="M20">M20</option>
+                            <option value="M25">M25</option>
+                            <option value="M30">M30</option>
+                            <option value="Asphalt Grade 1">Asphalt Grade 1</option>
+                            <option value="Asphalt Grade 2">Asphalt Grade 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity (m³)</label>
+                        <input type="number" id="quantity" min="1" placeholder="e.g. 40" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deliveryDate">Delivery Date</label>
+                        <input type="date" id="deliveryDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="siteLocation">Site Location</label>
+                        <input type="text" id="siteLocation" placeholder="Site address or project name" required>
+                    </div>
+                    <button class="btn" type="submit">Place Order</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Order Timeline</h3>
+                <div style="margin-top:18px;">
+                    <p><strong>Processing</strong> → Dispatched → On the Way → Delivered</p>
+                    <p style="color:var(--muted);margin-top:12px;">Track your orders as they move through each phase.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 style="margin-bottom:18px;">Recent Orders</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Mix Type</th>
+                        <th>Quantity</th>
+                        <th>Site</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="dashboard.html" class="nav-item" data-page="dashboard">🏠<span>Home</span></a>
+        <a href="orders.html" class="nav-item" data-page="orders">🛒<span>Orders</span></a>
+        <a href="fleet.html" class="nav-item" data-page="fleet">🚚<span>Fleet</span></a>
+        <a href="inventory.html" class="nav-item" data-page="inventory">📦<span>Inventory</span></a>
+        <a href="reports.html" class="nav-item" data-page="reports">📊<span>Reports</span></a>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        const orderList = [
+            { id: 'ORD-001', mixType: 'M25', quantity: 50, site: 'Highway Extension', status: 'Delivered' },
+            { id: 'ORD-002', mixType: 'Asphalt Grade 1', quantity: 30, site: 'Downtown Renovation', status: 'On the Way' },
+            { id: 'ORD-003', mixType: 'M20', quantity: 40, site: 'Commercial Complex', status: 'Dispatched' }
+        ];
+
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTable');
+            orderList.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.mixType}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.site}</td>
+                    <td><span class="chip ${order.status.toLowerCase().replace(/ /g, '-')}">${order.status}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const mixType = document.getElementById('mixType').value;
+            const quantity = document.getElementById('quantity').value;
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            const siteLocation = document.getElementById('siteLocation').value;
+
+            if (!mixType || !quantity || !deliveryDate || !siteLocation) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const newOrder = {
+                id: `ORD-${String(orderList.length + 1).padStart(3, '0')}`,
+                mixType,
+                quantity,
+                site: siteLocation,
+                status: 'Processing'
+            };
+            orderList.unshift(newOrder);
+            document.getElementById('ordersTable').innerHTML = '';
+            renderOrders();
+            alert('Order placed successfully!');
+            this.reset();
+        });
+
+        renderOrders();
+    </script>
+</body>
+</html>

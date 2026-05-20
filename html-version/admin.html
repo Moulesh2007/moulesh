@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - RS&CO Tracking</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="admin">
+  <div class="container page-container">
+    <div class="content-section">
+      <div class="card glass-card" style="padding:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 class="brand-gradient">Admin Console</h1>
+          <p class="muted-note">Full access to system settings, user management and reports.</p>
+          <div style="margin-top:12px">
+            <a class="btn btn-primary" href="dashboard.html">Open Admin Dashboard</a>
+            <a class="btn btn-ghost" href="reports.html" style="margin-left:8px">View Reports</a>
+          </div>
+        </div>
+        <div style="min-width:260px;">
+          <h4 style="margin:0 0 8px 0">System Health</h4>
+          <div class="progress"><div class="progress-inner w-85"></div></div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <div class="pill">Users: 128</div>
+            <div class="pill">Active Sessions: 24</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" style="margin-top:18px">
+      <div class="grid">
+        <div class="card glass-card" style="padding:18px">
+          <h3>Recent Admin Actions</h3>
+          <ul style="margin-top:12px;color:var(--muted)">
+            <li>Created user manager@rsco.com</li>
+            <li>Updated role bindings for Fleet API</li>
+            <li>Exported monthly reports (May)</li>
+          </ul>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Quick Controls</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+            <button class="btn btn-primary">Create User</button>
+            <button class="btn btn-ghost">Manage Roles</button>
+            <button class="btn btn-ghost">System Settings</button>
+          </div>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Reports</h3>
+          <p class="muted-note" style="margin-top:8px">Quick links to analytics and billing</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <a class="btn btn-ghost" href="reports.html">Open Reporting</a>
+            <a class="btn btn-ghost" href="orders.html">Orders Export</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

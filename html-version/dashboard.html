@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RS&CO Tracking</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="dashboard">
+    <div class="container">
+        <div class="header-row content-section">
+            <div class="page-top">
+                <div>
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="subtitle">Overview of plant status, fleet, orders, and projects.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-grid content-section">
+            <div class="card stat-card">
+                <h3>RMC Plant</h3>
+                <p>Online · 120 m³/hr</p>
+                <div class="progress"><div class="progress-inner w-85"></div></div>
+                <p class="muted-note mt12">Utilization: 85%</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Hotmix Plant</h3>
+                <p>Active · 80 TPH</p>
+                <div class="progress"><div class="progress-inner w-72"></div></div>
+                <p class="muted-note mt12">Utilization: 72%</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Orders Today</h3>
+                <p class="stat-count">12</p>
+                <p class="muted-note">This month: 145</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Fleet Utilization</h3>
+                <p class="stat-count">78%</p>
+                <p class="muted-note">Active vehicles in service</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="action-grid">
+                <a href="orders.html" class="action-card">
+                    <span>🛒</span>
+                    <div>
+                        <strong>New Order</strong>
+                        <p class="muted-note" style="margin-top:8px;">Create a concrete or asphalt order</p>
+                    </div>
+                </a>
+                <a href="orders.html" class="action-card">
+                    <span>📍</span>
+                    <div>
+                        <strong>Track Orders</strong>
+                        <p class="muted-note" style="margin-top:8px;">Check delivery progress</p>
+                    </div>
+                </a>
+                <a href="fleet.html" class="action-card">
+                    <span>🚚</span>
+                    <div>
+                        <strong>Fleet Tracking</strong>
+                        <p class="muted-note" style="margin-top:8px;">Monitor trucks live</p>
+                    </div>
+                </a>
+                <a href="inventory.html" class="action-card">
+                    <span>📦</span>
+                    <div>
+                        <strong>Inventory</strong>
+                        <p class="muted-note" style="margin-top:8px;">Check stock levels</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h4>Highway Construction</h4>
+                    <p class="muted-note" style="margin-bottom:12px;">Client: State DOT</p>
+                    <div class="progress"><div class="progress-inner w-65"></div></div>
+                    <p class="muted-note" style="margin-top:10px;">65% complete</p>
+                </div>
+                <div class="project-card">
+                    <h4>Commercial Complex</h4>
+                    <p class="muted-note" style="margin-bottom:12px;">Client: ABC Builders</p>
+                    <div class="progress"><div class="progress-inner w-42"></div></div>
+                    <p class="muted-note" style="margin-top:10px;">42% complete</p>
+                </div>
+                <div class="project-card">
+                    <h4>Airport Extension</h4>
+                    <p class="muted-note" style="margin-bottom:12px;">Client: Regional Authority</p>
+                    <div class="progress"><div class="progress-inner w-78"></div></div>
+                    <p class="muted-note" style="margin-top:10px;">78% complete</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="dashboard.html" class="nav-item" data-page="dashboard">🏠<span>Home</span></a>
+        <a href="orders.html" class="nav-item" data-page="orders">🛒<span>Orders</span></a>
+        <a href="fleet.html" class="nav-item" data-page="fleet">🚚<span>Fleet</span></a>
+        <a href="inventory.html" class="nav-item" data-page="inventory">📦<span>Inventory</span></a>
+        <a href="reports.html" class="nav-item" data-page="reports">📊<span>Reports</span></a>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

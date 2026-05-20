@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver View - RS&CO Tracking</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="driver">
+  <div class="container page-container">
+    <div class="content-section">
+      <div class="card glass-card" style="padding:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 class="brand-gradient">Driver Dashboard</h1>
+          <p class="muted-note">View assigned jobs, routes and submit status updates.</p>
+          <div style="margin-top:12px">
+            <a class="btn btn-primary" href="driver.html">Open Driver App</a>
+            <a class="btn btn-ghost" href="fleet.html" style="margin-left:8px">My Fleet</a>
+          </div>
+        </div>
+        <div style="min-width:260px;">
+          <h4 style="margin:0 0 8px 0">Shift</h4>
+          <div class="pill">Assigned: 3 jobs</div>
+          <div style="margin-top:8px" class="pill">ETA window: 12:30 - 15:00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" style="margin-top:18px">
+      <div class="grid">
+        <div class="card glass-card" style="padding:18px">
+          <h3>Today's Assignments</h3>
+          <table style="width:100%;margin-top:12px;color:var(--muted)">
+            <thead><tr><th>Job</th><th>Location</th><th>Status</th><th>ETA</th></tr></thead>
+            <tbody>
+              <tr><td>#A-101</td><td>Plant A</td><td>Loading</td><td>12:45</td></tr>
+              <tr><td>#A-102</td><td>Site B</td><td>Transit</td><td>13:30</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Navigation</h3>
+          <div class="map-placeholder">Start route → use Driver Simulator for live testing</div>
+        </div>
+
+        <div class="card glass-card" style="padding:18px">
+          <h3>Reporting</h3>
+          <p class="muted-note" style="margin-top:8px">Submit delivery notes and incident reports</p>
+          <div style="margin-top:12px"><a class="btn btn-ghost" href="reports.html">File Report</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
