@@ -3,6 +3,12 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index-prisma.js" },
     { "source": "/((?!assets/).*)", "destination": "/index.html" }
-  ]
+  ],
+  "functions": {
+    "api/index-prisma.js": {
+      "maxDuration": 30
+    }
+  }
 }
