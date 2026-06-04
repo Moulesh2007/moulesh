@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  CLIENT
+  DRIVER
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_TRANSIT
+  MAINTENANCE
+  IDLE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id           String    @id @default(uuid())
+  name         String?
+  email        String    @unique
+  password     String?
+  avatar       String?
+  role         Role?     @default(null)
+  authProvider String?  @default("local")
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  // Relations
+  ordersAsClient Order[] @relation("ClientOrders")
+  assignedVehicles Vehicle[]
+  trackingEvents  TrackingEvent[]
+}
+
+model Vehicle {
+  id           String        @id @default(uuid())
+  plateNumber  String        @unique
+  driverName   String?
+  driverId     String?
+  status       VehicleStatus @default(AVAILABLE)
+  speed        String?
+  fuelLevel    Int?
+  load         String?
+  deliveries   Int?
+  lat          Float?
+  lng          Float?
+  lastUpdated  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  // Relations
+  driver       User?         @relation(fields: [driverId], references: [id])
+  orders       Order[]
+  trackingEvents TrackingEvent[]
+}
+
+model Order {
+  id                String      @id @default(uuid())
+  workName          String
+  description       String?
+  clientId          String
+  assignedVehicleId String?
+  assignedDriverId  String?
+  status            OrderStatus @default(PENDING)
+  trackingEnabled   Boolean     @default(false)
+  location          String?
+  priority          Priority    @default(MEDIUM)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  
+  // Relations
+  client            User        @relation("ClientOrders", fields: [clientId], references: [id])
+  assignedVehicle   Vehicle?    @relation(fields: [assignedVehicleId], references: [id])
+  trackingEvents    TrackingEvent[]
+}
+
+model TrackingEvent {
+  id         String   @id @default(uuid())
+  vehicleId  String
+  orderId   String?
+  driverId   String?
+  lat        Float
+  lng        Float
+  speed      String?
+  fuelLevel  Int?
+  status     String?
+  timestamp  DateTime @default(now())
+  
+  // Relations
+  vehicle    Vehicle @relation(fields: [vehicleId], references: [id])
+  order      Order?  @relation(fields: [orderId], references: [id])
+  driver     User    @relation(fields: [driverId], references: [id])
+  
+  @@index([vehicleId])
+  @@index([orderId])
+  @@index([driverId])
+}
