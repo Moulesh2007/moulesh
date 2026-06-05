@@ -1,3 +1,6 @@
 import app from './_server/index-prisma.js';
 
-export default app;
+// Vercel serverless function handler
+export default function handler(req, res) {
+  app(req, res);
+}
