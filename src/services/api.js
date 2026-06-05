@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /** Base URL including `/api` (same for fetch() and axios). */
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005/api';
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,
