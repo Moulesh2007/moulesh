@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-/** Base URL including `/api` (same for fetch() and axios). */
-export const API_URL = import.meta.env.VITE_API_URL || '/api';
+/** Base URL (empty since backend routes already include /api prefix). */
+export const API_URL = import.meta.env.VITE_API_URL || '';
 
 const apiClient = axios.create({
   baseURL: API_URL,
