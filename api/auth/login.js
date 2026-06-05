@@ -10,19 +10,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'rsco_secret_2024';
 
 app.use(cors({
   origin: ['https://rs-co-tracking.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 }));
 app.use(express.json());
 
-// Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', database: 'connected' });
-});
-
-// Login route
-app.post('/auth/login', async (req, res) => {
+app.post('/', async (req, res) => {
   try {
     const { email, password } = req.body;
     
@@ -66,34 +58,6 @@ app.post('/auth/login', async (req, res) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Get current user
-app.get('/user/me', async (req, res) => {
-  try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    if (!token) {
-      return res.status(401).json({ message: 'Not authenticated' });
-    }
-    
-    const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        avatar: true,
-        lastLogin: true
-      }
-    });
-    
-    res.json(user);
-  } catch (error) {
-    console.error('Get user error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

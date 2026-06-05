@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-/** Base URL (empty since backend routes are at root level). */
-export const API_URL = import.meta.env.VITE_API_URL || '';
+/** Base URL (using /api for individual serverless functions). */
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,
