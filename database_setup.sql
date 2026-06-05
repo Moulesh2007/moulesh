@@ -1,10 +1,22 @@
 -- Run this SQL in your Supabase SQL Editor to create the database tables
 
+-- Drop existing types if they exist
+DROP TYPE IF EXISTS "Role" CASCADE;
+DROP TYPE IF EXISTS "OrderStatus" CASCADE;
+DROP TYPE IF EXISTS "VehicleStatus" CASCADE;
+DROP TYPE IF EXISTS "Priority" CASCADE;
+
 -- Create Enums
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'MANAGER', 'CLIENT', 'DRIVER');
 CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED');
 CREATE TYPE "VehicleStatus" AS ENUM ('AVAILABLE', 'IN_TRANSIT', 'MAINTENANCE', 'IDLE');
 CREATE TYPE "Priority" AS ENUM ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL');
+
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS "TrackingEvent" CASCADE;
+DROP TABLE IF EXISTS "Order" CASCADE;
+DROP TABLE IF EXISTS "Vehicle" CASCADE;
+DROP TABLE IF EXISTS "User" CASCADE;
 
 -- Create Users Table
 CREATE TABLE "User" (
