@@ -14,7 +14,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "node prisma/seed.js"
+    "prisma:seed": "node prisma/seed.js",
+    "postinstall": "node -e \"const {execSync} = require('child_process'); try { execSync('npx prisma generate', {stdio: 'inherit'}); } catch(e) { console.log('Prisma generation skipped'); }\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
