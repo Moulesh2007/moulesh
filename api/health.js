@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
 const app = express();
 
 app.use(cors({
@@ -10,13 +8,8 @@ app.use(cors({
   credentials: true
 }));
 
-app.get('/', async (req, res) => {
-  try {
-    await prisma.$connect();
-    res.json({ status: 'ok', database: 'connected' });
-  } catch (error) {
-    res.status(500).json({ status: 'error', database: 'disconnected', error: error.message });
-  }
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'API is working' });
 });
 
 export default app;
